@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Beatmaker</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        background: #111;
+        color: #eee;
+        text-align: center;
+        padding: 20px;
+      }
+      button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      #log {
+        margin-top: 20px;
+        max-height: 200px;
+        overflow-y: auto;
+        background: #222;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 14px;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Beatmaker 🎵</h1>
+
+    <input type="file" id="musicFile" accept="audio/*" /><br />
+    <audio id="player" controls></audio><br />
+
+    <button id="start">Start</button>
+    <button id="download">Download JSON</button>
+
+    <div id="log"><p>➡ Load musik dulu, lalu klik Start untuk record</p></div>
+
+    <script>
+      const player = document.getElementById("player");
+      const fileInput = document.getElementById("musicFile");
+      const logDiv = document.getElementById("log");
+      const startBtn = document.getElementById("start");
+      const downloadBtn = document.getElementById("download");
+
+      let isRecording = false;
+      let beatmap = { meta: {}, notes: [] };
+
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const url = URL.createObjectURL(file);
+          player.src = url;
+          beatmap = {
+            meta: { title: file.name, artist: "Unknown", audioFile: file.name },
+            notes: [],
+          };
+          isRecording = false;
+          logDiv.innerHTML = `<p>🎶 Loaded: ${file.name}</p>`;
+        }
+      });
+
+      const keyMap = {
+        ArrowLeft: "left",
+        ArrowUp: "up",
+        ArrowDown: "down",
+        ArrowRight: "right",
+      };
+
+      startBtn.addEventListener("click", () => {
+        if (!player.src) {
+          alert("Load musik dulu!");
+          return;
+        }
+        player.currentTime = 0;
+        player.play();
+        beatmap.notes = [];
+        isRecording = true;
+        logDiv.innerHTML += `<p>Start recording...</p>`;
+      });
+
+      window.addEventListener("keydown", (e) => {
+        if (isRecording && keyMap[e.key]) {
+          const currentTimeMs = Math.floor(player.currentTime * 1000);
+          const note = { time: currentTimeMs, type: keyMap[e.key] };
+          beatmap.notes.push(note);
+
+          logDiv.innerHTML += `<div>+ ${note.type} @ ${note.time} ms</div>`;
+          logDiv.scrollTop = logDiv.scrollHeight;
+
+          console.log("Recorded note:", note);
+        }
+      });
+
+      downloadBtn.addEventListener("click", () => {
+        if (beatmap.notes.length === 0) {
+          alert("Belum ada note yang direkam!");
+          return;
+        }
+        const blob = new Blob([JSON.stringify(beatmap, null, 2)], {
+          type: "application/json",
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "beatmap.json";
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    </script>
+  </body>
+</html>
