@@ -1,21 +1,23 @@
 export class ArrowBox {
-  constructor() {
-    const arrows = ["left", "up", "down", "right"];
-    this.positions = arrows.map((dir, i) => ({
-      name: dir,
-      image: this.loadImage(`/arrow_box/${dir}.png`),
-      x: 130 + i * 130,
-    }));
-  }
-
-  loadImage(src) {
+  static loadImage(src) {
     const img = new Image();
     img.src = src;
     return img;
   }
 
+  static positions = [
+    { name: "left", image: ArrowBox.loadImage("/arrow_box/left.png"), x: 65 },
+    { name: "up", image: ArrowBox.loadImage("/arrow_box/up.png"), x: 195 },
+    { name: "down", image: ArrowBox.loadImage("/arrow_box/down.png"), x: 475 },
+    {
+      name: "right",
+      image: ArrowBox.loadImage("/arrow_box/right.png"),
+      x: 605,
+    },
+  ];
+
   draw(ctx) {
-    this.positions.forEach(({ image, x }) => {
+    ArrowBox.positions.forEach(({ image, x }) => {
       ctx.drawImage(image, x, 460, 80, 80);
     });
   }

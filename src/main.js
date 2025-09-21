@@ -15,7 +15,7 @@ game
   .loadBeatmap()
   .then(() => {
     ctx.fillStyle = "white";
-    ctx.font = "30px Arial";
+    ctx.font = "32px FNFFont";
     ctx.textAlign = "center";
     ctx.fillText(
       "Click anywhere to start",
