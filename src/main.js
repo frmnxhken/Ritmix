@@ -2,6 +2,7 @@ import Game from "./components/Game.js";
 import { initInput } from "./utils/Input.js";
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from "./utils/Constants.js";
 
+const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
