@@ -16,7 +16,7 @@ export default class Score {
   draw(ctx) {
     ctx.fillStyle = "white";
     ctx.font = "18px FNFFont";
-    ctx.fillText(this.score, 380, 500);
+    ctx.fillText(this.score, 380, 490);
 
     let scale = 1;
     const now = performance.now();
@@ -28,9 +28,9 @@ export default class Score {
     }
 
     ctx.save();
-    ctx.translate(380, 530);
+    ctx.translate(380, 520);
     ctx.scale(scale, scale);
-    ctx.font = "32px FNFFont";
+    ctx.font = "36px FNFFont";
     ctx.fillText(this.combo, 0, 0);
     ctx.restore();
   }

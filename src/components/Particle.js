@@ -3,7 +3,7 @@ export default class Particle {
     this.x = x;
     this.y = y;
     this.color = color;
-    this.size = Math.random() * 2 + 2;
+    this.size = Math.random() * 3 + 2;
     this.speedX = (Math.random() - 0.5) * 4;
     this.speedY = (Math.random() - 0.5) * 4;
     this.life = 1000;
