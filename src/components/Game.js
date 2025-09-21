@@ -3,6 +3,7 @@ import Particle from "./Particle.js";
 import Score from "./Score.js";
 import * as C from "../utils/Constants.js";
 import { ArrowBox } from "./ArrowBox.js";
+import ScreenShake from "../utils/ScreenShake.js";
 
 export default class Game {
   constructor(canvas, ctx, audioSrc, beatmapUrl) {
@@ -19,9 +20,10 @@ export default class Game {
     this.nextNoteIndex = 0;
     this.bgImage = new Image();
     this.bgImage.src = "bg.jpg";
-    this.shakeDuration = 0;
-    this.shakeElapsed = 0;
-    this.shakeIntensity = 0;
+    this.screenShake = new ScreenShake();
+    // this.shakeDuration = 0;
+    // this.shakeElapsed = 0;
+    // this.shakeIntensity = 0;
   }
 
   async loadBeatmap() {
@@ -31,11 +33,11 @@ export default class Game {
     this.meta = data.meta;
   }
 
-  triggerShake(intensity = 2, duration = 150) {
-    this.shakeDuration = duration;
-    this.shakeElapsed = 0;
-    this.shakeIntensity = intensity;
-  }
+  // triggerShake(intensity = 2, duration = 150) {
+  //   this.shakeDuration = duration;
+  //   this.shakeElapsed = 0;
+  //   this.shakeIntensity = intensity;
+  // }
 
   start() {
     this.audio.currentTime = 0;
@@ -60,7 +62,8 @@ export default class Game {
 
     if (timeDiff <= C.GOOD_WINDOW_MS + C.OFFSITE_WINDOW) {
       targetNote.isHit = true;
-      this.triggerShake(timeDiff <= C.PERFECT_WINDOW_MS ? 4 : 2, 200);
+      // this.triggerShake(timeDiff <= C.PERFECT_WINDOW_MS ? 4 : 2, 200);
+      this.screenShake.trigger(timeDiff <= C.PERFECT_WINDOW_MS ? 4 : 2, 200);
       this.score.update(timeDiff <= C.PERFECT_WINDOW_MS ? 300 : 100, 1);
       for (let j = 0; j < 7; j++) {
         this.particles.push(
@@ -97,30 +100,33 @@ export default class Game {
     this.particles.forEach((p) => p.update(deltaTime));
     this.particles = this.particles.filter((p) => p.isAlive());
 
-    if (this.shakeDuration > 0) {
-      this.shakeElapsed += deltaTime;
-      if (this.shakeElapsed >= this.shakeDuration) {
-        this.shakeDuration = 0;
-        this.shakeElapsed = 0;
-      }
-    }
+    this.screenShake.update(deltaTime);
+
+    // if (this.shakeDuration > 0) {
+    //   this.shakeElapsed += deltaTime;
+    //   if (this.shakeElapsed >= this.shakeDuration) {
+    //     this.shakeDuration = 0;
+    //     this.shakeElapsed = 0;
+    //   }
+    // }
   }
 
   draw() {
     this.ctx.save();
 
-    if (this.shakeDuration > 0) {
-      const progress = this.shakeElapsed / this.shakeDuration;
-      const angle = Math.sin(progress * Math.PI * 2);
-      const dx = angle * this.shakeIntensity;
-      const dy = (Math.random() - 0.3) * 2;
-      this.ctx.translate(dx, dy);
-      const zoom = 1 + 0.01 * (0.3 - progress);
-      this.ctx.translate(C.CANVAS_WIDTH / 2, C.CANVAS_HEIGHT / 2);
-      this.ctx.scale(zoom, zoom);
-      this.ctx.translate(-C.CANVAS_WIDTH / 2 + dx, -C.CANVAS_HEIGHT / 2 + dy);
-    }
+    // if (this.shakeDuration > 0) {
+    //   const progress = this.shakeElapsed / this.shakeDuration;
+    //   const angle = Math.sin(progress * Math.PI * 2);
+    //   const dx = angle * this.shakeIntensity;
+    //   const dy = (Math.random() - 0.3) * 2;
+    //   this.ctx.translate(dx, dy);
+    //   const zoom = 1 + 0.01 * (0.3 - progress);
+    //   this.ctx.translate(C.CANVAS_WIDTH / 2, C.CANVAS_HEIGHT / 2);
+    //   this.ctx.scale(zoom, zoom);
+    //   this.ctx.translate(-C.CANVAS_WIDTH / 2 + dx, -C.CANVAS_HEIGHT / 2 + dy);
+    // }
 
+    this.screenShake.shake(this.ctx);
     this.ctx.clearRect(0, 0, C.CANVAS_WIDTH, C.CANVAS_HEIGHT);
     this.ctx.drawImage(this.bgImage, 0, 0, C.CANVAS_WIDTH, C.CANVAS_HEIGHT);
     this.arrowBox.draw(this.ctx);
