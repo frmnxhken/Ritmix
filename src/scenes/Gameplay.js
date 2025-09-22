@@ -42,13 +42,13 @@ export default class Gameplay {
         up: {
           startFrame: 9,
           endFrame: 11,
-          frameRate: 13,
+          frameRate: 8,
           loop: false,
         },
         down: {
           startFrame: 12,
           endFrame: 14,
-          frameRate: 13,
+          frameRate: 8,
           loop: false,
         },
       }
