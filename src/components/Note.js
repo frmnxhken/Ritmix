@@ -45,9 +45,9 @@ export default class Note {
 
   update(deltaTime, currentTimeMs) {
     const timeUntilHit = this.time - currentTimeMs;
-    if (timeUntilHit < -200) {
-      return;
-    }
+    // if (timeUntilHit < -200) {
+    //   return;
+    // }
 
     const travelPercentageRemaining = timeUntilHit / this.leadTime;
     const totalDistance = HIT_LINE_Y + this.size / 2;

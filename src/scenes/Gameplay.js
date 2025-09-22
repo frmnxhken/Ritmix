@@ -86,7 +86,6 @@ export default class Gameplay {
       if (note.isHit) return false;
       if (currentTimeMs > note.time + C.MISS_WINDOW_MS) {
         this.score.update(0, 0);
-        return false;
       }
       return note.y < C.CANVAS_HEIGHT + C.NOTE_SIZE;
     });
