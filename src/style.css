@@ -25,7 +25,8 @@ canvas {
   border: 1px solid black;
 }
 
-.menu {
+.menu,
+.game-over {
   color: white;
   margin: auto;
   max-width: 800px;
@@ -54,4 +55,32 @@ canvas {
 .menu .music:hover {
   background-color: white;
   color: black;
+}
+
+.game-over h1 {
+  font-size: 64px;
+  margin-bottom: 10px;
+}
+
+.game-over p {
+  font-size: 20px;
+}
+
+.game-over button {
+  font-family: "FNFFont";
+  background-color: white;
+  padding: 10px 20px;
+  font-size: 20px;
+  border-radius: 10px;
+  transform: rotate(-1.5deg);
+  margin-top: 50px;
+  cursor: pointer;
+}
+
+.game-over button:hover {
+  background-color: black;
+  border: 1px solid white;
+  transform: rotate(1.5deg);
+  margin-top: 50px;
+  color: white;
 }

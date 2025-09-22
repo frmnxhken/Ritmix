@@ -6,6 +6,7 @@ import ScreenShake from "@/utils/ScreenShake.js";
 import { initInput } from "@/utils/Input.js";
 import { HitDetect } from "@/utils/HitDetect.js";
 import Sprite from "@/utils/Sprite";
+import GameOver from "./GameOver";
 
 export default class Gameplay {
   constructor(game, data) {
@@ -85,6 +86,11 @@ export default class Gameplay {
     };
     await this.audio.play();
     this.character.play("idle");
+
+    this.audio.onended = () => {
+      this.destroy();
+      this.game.changeScene(new GameOver(this.game));
+    };
   }
 
   async loadBeatmap() {
