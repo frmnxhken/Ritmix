@@ -5,12 +5,54 @@ import { ArrowBox } from "@/components/ArrowBox.js";
 import ScreenShake from "@/utils/ScreenShake.js";
 import { initInput } from "@/utils/Input.js";
 import { HitDetect } from "@/utils/HitDetect.js";
+import Sprite from "@/utils/Sprite";
 
 export default class Gameplay {
   constructor(game, data) {
     this.game = game;
     this.audioSrc = data.music;
     this.beatmapUrl = data.beat;
+    this.character = new Sprite(
+      {
+        imageSrc: "bf.png",
+        frameWidth: 675,
+        frameHeight: 675,
+        columns: 3,
+        rows: 5,
+      },
+      {
+        idle: {
+          startFrame: 0,
+          endFrame: 2,
+          frameRate: 8,
+          loop: true,
+        },
+        left: {
+          startFrame: 3,
+          endFrame: 5,
+          frameRate: 8,
+          loop: false,
+        },
+        right: {
+          startFrame: 6,
+          endFrame: 8,
+          frameRate: 8,
+          loop: false,
+        },
+        up: {
+          startFrame: 9,
+          endFrame: 11,
+          frameRate: 13,
+          loop: false,
+        },
+        down: {
+          startFrame: 12,
+          endFrame: 14,
+          frameRate: 13,
+          loop: false,
+        },
+      }
+    );
 
     this.notes = [];
     this.particles = [];
@@ -42,6 +84,7 @@ export default class Gameplay {
       this.startTime = performance.now();
     };
     await this.audio.play();
+    this.character.play("idle");
   }
 
   async loadBeatmap() {
@@ -72,6 +115,14 @@ export default class Gameplay {
     const currentTimeMs = performance.now() - this.startTime;
     const msPerBeat = (60 / this.meta.bpm) * 1000;
     this.leadTime = msPerBeat * C.LEAD_BEAT;
+    this.character.update(deltaTime);
+
+    if (
+      !this.character.isPlaying &&
+      this.character.currentAnimName !== "idle"
+    ) {
+      this.character.play("idle");
+    }
 
     while (
       this.nextNoteIndex < this.beatmap.length &&
@@ -100,6 +151,7 @@ export default class Gameplay {
     this.screenShake.shake(ctx);
     ctx.clearRect(0, 0, C.CANVAS_WIDTH, C.CANVAS_HEIGHT);
     ctx.drawImage(this.bgImage, 0, 0, C.CANVAS_WIDTH, C.CANVAS_HEIGHT);
+    this.character.draw(ctx, C.CANVAS_WIDTH / 2, C.CANVAS_HEIGHT - 300, 200);
     this.arrowBox.draw(ctx);
     this.ctxFillLine(ctx);
     this.notes.forEach((note) => note.draw(ctx));

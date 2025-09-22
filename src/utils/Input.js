@@ -10,6 +10,7 @@ export function initInput(gameInstance) {
     const key = keyMap[e.key];
     if (key) {
       gameInstance.handleHit(key);
+      gameInstance.character.play(key);
     }
   });
 }
