@@ -1,10 +1,10 @@
-import Note from "../components/Note.js";
-import Score from "../components/Score.js";
-import * as C from "../utils/Constants.js";
-import { ArrowBox } from "../components/ArrowBox.js";
-import ScreenShake from "../utils/ScreenShake.js";
-import { initInput } from "../utils/Input.js";
-import { HitDetect } from "../utils/HitDetect.js";
+import Note from "@/components/Note.js";
+import Score from "@/components/Score.js";
+import * as C from "@/utils/Constants.js";
+import { ArrowBox } from "@/components/ArrowBox.js";
+import ScreenShake from "@/utils/ScreenShake.js";
+import { initInput } from "@/utils/Input.js";
+import { HitDetect } from "@/utils/HitDetect.js";
 
 export default class Gameplay {
   constructor(game, data) {

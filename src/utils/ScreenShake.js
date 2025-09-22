@@ -1,4 +1,4 @@
-import * as C from "./Constants.js";
+import * as C from "@/utils/Constants.js";
 
 export default class ScreenShake {
   constructor() {

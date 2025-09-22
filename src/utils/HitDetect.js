@@ -1,5 +1,5 @@
-import * as C from "./Constants.js";
-import Particle from "../components/Particle.js";
+import * as C from "@/utils/Constants.js";
+import Particle from "@/components/Particle.js";
 
 export function HitDetect(gameplay, type) {
   const currentTimeMs = gameplay.audio.currentTime * 1000;

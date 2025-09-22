@@ -1,5 +1,5 @@
-import playlists from "../playlist.json";
-import Gameplay from "./Gameplay";
+import playlists from "@/playlist.json";
+import Gameplay from "@/scenes/Gameplay.js";
 
 export default class Menu {
   constructor(game) {
