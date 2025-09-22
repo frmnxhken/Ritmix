@@ -37,14 +37,30 @@ export default class Gameplay {
     await this.loadBeatmap();
     initInput(this);
     this.audio.currentTime = 0;
-    this.audio.play();
+    this.startTime = null;
+    this.audio.onplay = () => {
+      this.startTime = performance.now();
+    };
+    await this.audio.play();
   }
 
   async loadBeatmap() {
     const res = await fetch(this.beatmapUrl);
     const data = await res.json();
-    this.beatmap = data.notes.sort((a, b) => a.time - b.time);
     this.meta = data.meta;
+    const beatDuration = 60000 / this.meta.bpm;
+
+    this.beatmap = data.notes
+      .map((note) => {
+        if ("beat" in note) {
+          return {
+            ...note,
+            time: note.beat * beatDuration,
+          };
+        }
+        return note;
+      })
+      .sort((a, b) => a.time - b.time);
   }
 
   handleHit(type) {
@@ -52,7 +68,8 @@ export default class Gameplay {
   }
 
   update(deltaTime) {
-    const currentTimeMs = this.audio.currentTime * 1000;
+    if (!this.startTime) return;
+    const currentTimeMs = performance.now() - this.startTime;
 
     while (
       this.nextNoteIndex < this.beatmap.length &&
@@ -63,8 +80,7 @@ export default class Gameplay {
       this.notes.push(new Note(noteData, this.meta));
       this.nextNoteIndex++;
     }
-
-    this.notes.forEach((note) => note.update(deltaTime));
+    this.notes.forEach((note) => note.update(deltaTime, currentTimeMs));
     this.notes = this.notes.filter((note) => {
       if (note.isHit) return false;
       if (currentTimeMs > note.time + C.MISS_WINDOW_MS) {

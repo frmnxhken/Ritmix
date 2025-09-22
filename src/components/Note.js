@@ -36,21 +36,24 @@ export default class Note {
 
   constructor(noteData) {
     this.type = noteData.type;
-    this.time = noteData.time;
     this.x = Note.variants[this.type].x;
     this.y = -NOTE_SIZE;
     this.color = Note.variants[this.type].color;
     this.image = Note.variants[this.type].image;
     this.size = NOTE_SIZE;
     this.isHit = false;
-
-    const distance = HIT_LINE_Y + this.size;
-    const travelTime = NOTE_SPAWN_LEAD_TIME / 1000;
-    this.speed = distance / travelTime;
+    this.time = noteData.time;
   }
 
-  update(deltaTime) {
-    this.y += (this.speed * deltaTime) / 1000;
+  update(deltaTime, currentTimeMs) {
+    const timeUntilHit = this.time - currentTimeMs;
+    if (timeUntilHit < 0) {
+      return;
+    }
+
+    const travelPercentageRemaining = timeUntilHit / NOTE_SPAWN_LEAD_TIME;
+    const totalDistance = HIT_LINE_Y + this.size / 2;
+    this.y = HIT_LINE_Y - totalDistance * travelPercentageRemaining;
   }
 
   draw(ctx) {
