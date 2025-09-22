@@ -153,16 +153,10 @@ export default class Gameplay {
     ctx.drawImage(this.bgImage, 0, 0, C.CANVAS_WIDTH, C.CANVAS_HEIGHT);
     this.character.draw(ctx, C.CANVAS_WIDTH / 2, C.CANVAS_HEIGHT - 300, 200);
     this.arrowBox.draw(ctx);
-    this.ctxFillLine(ctx);
     this.notes.forEach((note) => note.draw(ctx));
     this.particles.forEach((p) => p.draw(ctx));
     this.score.draw(ctx);
     ctx.restore();
-  }
-
-  ctxFillLine(ctx) {
-    ctx.fillStyle = "#333";
-    ctx.fillRect(0, C.HIT_LINE_Y - 50, C.CANVAS_WIDTH, 1);
   }
 
   destroy() {
