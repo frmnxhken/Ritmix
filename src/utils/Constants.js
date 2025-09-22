@@ -4,6 +4,7 @@ export const HIT_LINE_OFFSET = 100;
 export const HIT_LINE_Y = CANVAS_HEIGHT - HIT_LINE_OFFSET;
 export const NOTE_SIZE = 80;
 export const NOTE_SPAWN_LEAD_TIME = 1800;
+export const LEAD_BEAT = 3;
 export const PERFECT_WINDOW_MS = 50;
 export const GOOD_WINDOW_MS = 100;
 export const MISS_WINDOW_MS = 200;

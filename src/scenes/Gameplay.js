@@ -70,11 +70,12 @@ export default class Gameplay {
   update(deltaTime) {
     if (!this.startTime) return;
     const currentTimeMs = performance.now() - this.startTime;
+    const msPerBeat = (60 / this.meta.bpm) * 1000;
+    this.leadTime = msPerBeat * C.LEAD_BEAT;
 
     while (
       this.nextNoteIndex < this.beatmap.length &&
-      currentTimeMs >=
-        this.beatmap[this.nextNoteIndex].time - C.NOTE_SPAWN_LEAD_TIME
+      currentTimeMs >= this.beatmap[this.nextNoteIndex].time - this.leadTime
     ) {
       const noteData = this.beatmap[this.nextNoteIndex];
       this.notes.push(new Note(noteData, this.meta));

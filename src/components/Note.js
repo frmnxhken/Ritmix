@@ -1,8 +1,4 @@
-import {
-  HIT_LINE_Y,
-  NOTE_SIZE,
-  NOTE_SPAWN_LEAD_TIME,
-} from "../utils/Constants.js";
+import { HIT_LINE_Y, NOTE_SIZE, LEAD_BEAT } from "../utils/Constants.js";
 
 export default class Note {
   static loadImage(src) {
@@ -34,7 +30,7 @@ export default class Note {
     },
   };
 
-  constructor(noteData) {
+  constructor(noteData, meta) {
     this.type = noteData.type;
     this.x = Note.variants[this.type].x;
     this.y = -NOTE_SIZE;
@@ -43,15 +39,17 @@ export default class Note {
     this.size = NOTE_SIZE;
     this.isHit = false;
     this.time = noteData.time;
+    const msPerBeat = (60 / meta.bpm) * 1000;
+    this.leadTime = msPerBeat * LEAD_BEAT;
   }
 
   update(deltaTime, currentTimeMs) {
     const timeUntilHit = this.time - currentTimeMs;
-    if (timeUntilHit < 0) {
+    if (timeUntilHit < -200) {
       return;
     }
 
-    const travelPercentageRemaining = timeUntilHit / NOTE_SPAWN_LEAD_TIME;
+    const travelPercentageRemaining = timeUntilHit / this.leadTime;
     const totalDistance = HIT_LINE_Y + this.size / 2;
     this.y = HIT_LINE_Y - totalDistance * travelPercentageRemaining;
   }
