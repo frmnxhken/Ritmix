@@ -1,0 +1,14 @@
+{
+  "data": [
+    {
+      "title": "Tangkis Dang",
+      "music": "music1.mp3",
+      "beat": "beat1.json"
+    },
+    {
+      "title": "JKT48 Rapsodi",
+      "music": "music1.mp3",
+      "beat": "beat1.json"
+    }
+  ]
+}

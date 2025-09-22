@@ -1,3 +1,5 @@
+import * as C from "../utils/Constants";
+
 export default class Score {
   constructor() {
     this.score = 0;
@@ -16,7 +18,10 @@ export default class Score {
   draw(ctx) {
     ctx.fillStyle = "white";
     ctx.font = "18px FNFFont";
-    ctx.fillText(this.score, 380, 490);
+    const scoreText = this.score.toString();
+    const scoreMetrics = ctx.measureText(scoreText);
+    const scoreX = (C.CANVAS_WIDTH - scoreMetrics.width) / 2;
+    ctx.fillText(scoreText, scoreX, 490);
 
     let scale = 1;
     const now = performance.now();
@@ -28,10 +33,15 @@ export default class Score {
     }
 
     ctx.save();
-    ctx.translate(380, 520);
-    ctx.scale(scale, scale);
     ctx.font = "36px FNFFont";
-    ctx.fillText(this.combo, 0, 0);
+    const comboText = this.combo.toString();
+    const comboMetrics = ctx.measureText(comboText);
+    const centerX = C.CANVAS_WIDTH / 2;
+    const comboX = -comboMetrics.width / 2;
+
+    ctx.translate(centerX, 520);
+    ctx.scale(scale, scale);
+    ctx.fillText(comboText, comboX, 0);
     ctx.restore();
   }
 }
