@@ -9,6 +9,7 @@ import GameOver from "@/scenes/GameOver";
 import AudioManager from "@/systems/AudioManager";
 import NoteManager from "@/systems/NoteManager";
 import ParticleManager from "@/systems/ParticleManager";
+import { Canvas } from "@/utils/Canvas";
 
 export default class Gameplay {
   constructor(game, data) {
@@ -74,18 +75,14 @@ export default class Gameplay {
   }
 
   async init() {
-    const root = document.getElementById("root");
-    root.innerHTML = `<canvas width="${C.CANVAS_WIDTH}" height="${C.CANVAS_HEIGHT}"></canvas>`;
+    Canvas();
     this.game.canvas = document.querySelector("canvas");
     this.game.ctx = this.game.canvas.getContext("2d");
 
     await this.loadBeatmap();
     this.notes.setMeta(this.meta);
     initInput(this);
-    await this.audio.play(() => {
-      this.destroy();
-      this.game.changeScene(new GameOver(this.game));
-    });
+    await this.audio.play(() => this.game.changeScene(new GameOver(this.game)));
     this.character.play("idle");
   }
 
