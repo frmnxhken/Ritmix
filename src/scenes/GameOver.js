@@ -1,8 +1,9 @@
 import Menu from "./Menu";
 
 export default class GameOver {
-  constructor(game) {
+  constructor(game, score) {
     this.game = game;
+    this.score = score;
     this._buttonBack = null;
   }
 
@@ -11,7 +12,7 @@ export default class GameOver {
     root.innerHTML = `
         <div class="game-over">
             <h1>Anjay Bro</h1>
-            <p>Your Score: 23200</p>
+            <p>Your Score: ${this.score}</p>
             <button>Back To Menu</button>
         </div>
     `;

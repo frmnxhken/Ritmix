@@ -82,7 +82,9 @@ export default class Gameplay {
     await this.loadBeatmap();
     this.notes.setMeta(this.meta);
     initInput(this);
-    await this.audio.play(() => this.game.changeScene(new GameOver(this.game)));
+    await this.audio.play(() =>
+      this.game.changeScene(new GameOver(this.game, this.score.score))
+    );
     this.character.play("idle");
   }
 
