@@ -1,4 +1,3 @@
-import Note from "@/components/Note.js";
 import Score from "@/components/Score.js";
 import * as C from "@/utils/Constants.js";
 import { ArrowBox } from "@/components/ArrowBox.js";
@@ -8,6 +7,7 @@ import { HitDetect } from "@/utils/HitDetect.js";
 import Sprite from "@/utils/Sprite";
 import GameOver from "@/scenes/GameOver";
 import AudioManager from "@/systems/AudioManager";
+import NoteManager from "@/systems/NoteManager";
 
 export default class Gameplay {
   constructor(game, data) {
@@ -56,7 +56,7 @@ export default class Gameplay {
       }
     );
 
-    this.notes = [];
+    this.notes = new NoteManager();
     this.particles = [];
     this.lastTime = 0;
     this.nextNoteIndex = 0;
@@ -79,6 +79,7 @@ export default class Gameplay {
     this.game.ctx = this.game.canvas.getContext("2d");
 
     await this.loadBeatmap();
+    this.notes.setMeta(this.meta);
     initInput(this);
     await this.audio.play(() => {
       this.destroy();
@@ -129,18 +130,11 @@ export default class Gameplay {
       currentTimeMs >= this.beatmap[this.nextNoteIndex].time - this.leadTime
     ) {
       const noteData = this.beatmap[this.nextNoteIndex];
-      this.notes.push(new Note(noteData, this.meta));
+      this.notes.spawn(noteData);
       this.nextNoteIndex++;
     }
-    this.notes.forEach((note) => note.update(deltaTime, currentTimeMs));
-    this.notes = this.notes.filter((note) => {
-      if (note.isHit) return false;
-      if (currentTimeMs > note.time + C.MISS_WINDOW_MS) {
-        this.score.update(0, 0);
-      }
-      return note.y < C.CANVAS_HEIGHT + C.NOTE_SIZE;
-    });
 
+    this.notes.update(deltaTime, currentTimeMs, this.score);
     this.particles.forEach((p) => p.update(deltaTime));
     this.particles = this.particles.filter((p) => p.isAlive());
     this.screenShake.update(deltaTime);
@@ -153,7 +147,7 @@ export default class Gameplay {
     ctx.drawImage(this.bgImage, 0, 0, C.CANVAS_WIDTH, C.CANVAS_HEIGHT);
     this.character.draw(ctx, C.CANVAS_WIDTH / 2, C.CANVAS_HEIGHT - 300, 200);
     this.arrowBox.draw(ctx);
-    this.notes.forEach((note) => note.draw(ctx));
+    this.notes.draw(ctx);
     this.particles.forEach((p) => p.draw(ctx));
     this.score.draw(ctx);
     ctx.restore();

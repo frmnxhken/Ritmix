@@ -1,4 +1,10 @@
-import { HIT_LINE_Y, NOTE_SIZE, LEAD_BEAT } from "../utils/Constants.js";
+import {
+  HIT_LINE_Y,
+  NOTE_SIZE,
+  LEAD_BEAT,
+  MISS_WINDOW_MS,
+  CANVAS_HEIGHT,
+} from "@/utils/Constants.js";
 
 export default class Note {
   static loadImage(src) {
@@ -52,6 +58,20 @@ export default class Note {
     const travelPercentageRemaining = timeUntilHit / this.leadTime;
     const totalDistance = HIT_LINE_Y + this.size / 2;
     this.y = HIT_LINE_Y - totalDistance * travelPercentageRemaining;
+  }
+
+  remove(currentTimeMs, score) {
+    if (this.isHit) return true;
+    if (currentTimeMs > this.time + MISS_WINDOW_MS) {
+      score.update(0, 0);
+      return true;
+    }
+
+    if (this.y > CANVAS_HEIGHT + NOTE_SIZE) {
+      return true;
+    }
+
+    return false;
   }
 
   draw(ctx) {
