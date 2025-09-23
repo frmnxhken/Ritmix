@@ -8,6 +8,7 @@ import Sprite from "@/utils/Sprite";
 import GameOver from "@/scenes/GameOver";
 import AudioManager from "@/systems/AudioManager";
 import NoteManager from "@/systems/NoteManager";
+import ParticleManager from "@/systems/ParticleManager";
 
 export default class Gameplay {
   constructor(game, data) {
@@ -57,7 +58,7 @@ export default class Gameplay {
     );
 
     this.notes = new NoteManager();
-    this.particles = [];
+    this.particles = new ParticleManager();
     this.lastTime = 0;
     this.nextNoteIndex = 0;
 
@@ -135,8 +136,7 @@ export default class Gameplay {
     }
 
     this.notes.update(deltaTime, currentTimeMs, this.score);
-    this.particles.forEach((p) => p.update(deltaTime));
-    this.particles = this.particles.filter((p) => p.isAlive());
+    this.particles.update(deltaTime);
     this.screenShake.update(deltaTime);
   }
 
@@ -148,7 +148,7 @@ export default class Gameplay {
     this.character.draw(ctx, C.CANVAS_WIDTH / 2, C.CANVAS_HEIGHT - 300, 200);
     this.arrowBox.draw(ctx);
     this.notes.draw(ctx);
-    this.particles.forEach((p) => p.draw(ctx));
+    this.particles.draw(ctx);
     this.score.draw(ctx);
     ctx.restore();
   }

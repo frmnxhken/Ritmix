@@ -21,9 +21,7 @@ export function HitDetect(gameplay, type) {
     gameplay.screenShake.trigger(timeDiff <= C.PERFECT_WINDOW_MS ? 4 : 2, 200);
     gameplay.score.update(timeDiff <= C.PERFECT_WINDOW_MS ? 300 : 100, 1);
     for (let j = 0; j < 7; j++) {
-      gameplay.particles.push(
-        new Particle(targetNote.x, C.HIT_LINE_Y, targetNote.color)
-      );
+      gameplay.particles.spawn(targetNote.x, C.HIT_LINE_Y, targetNote.color);
     }
   }
 }
