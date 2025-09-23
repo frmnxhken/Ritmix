@@ -3,10 +3,11 @@ import Score from "@/components/Score.js";
 import * as C from "@/utils/Constants.js";
 import { ArrowBox } from "@/components/ArrowBox.js";
 import ScreenShake from "@/utils/ScreenShake.js";
-import { initInput } from "@/utils/Input.js";
+import { initInput } from "@/systems/Input.js";
 import { HitDetect } from "@/utils/HitDetect.js";
 import Sprite from "@/utils/Sprite";
-import GameOver from "./GameOver";
+import GameOver from "@/scenes/GameOver";
+import AudioManager from "@/systems/AudioManager";
 
 export default class Gameplay {
   constructor(game, data) {
@@ -67,7 +68,7 @@ export default class Gameplay {
     this.bgImage = new Image();
     this.bgImage.src = "bg.jpg";
 
-    this.audio = new Audio(this.audioSrc);
+    this.audio = new AudioManager(this.audioSrc);
     this.beatmap = [];
   }
 
@@ -79,18 +80,11 @@ export default class Gameplay {
 
     await this.loadBeatmap();
     initInput(this);
-    this.audio.currentTime = 0;
-    this.startTime = null;
-    this.audio.onplay = () => {
-      this.startTime = performance.now();
-    };
-    await this.audio.play();
-    this.character.play("idle");
-
-    this.audio.onended = () => {
+    await this.audio.play(() => {
       this.destroy();
       this.game.changeScene(new GameOver(this.game));
-    };
+    });
+    this.character.play("idle");
   }
 
   async loadBeatmap() {
@@ -117,8 +111,8 @@ export default class Gameplay {
   }
 
   update(deltaTime) {
-    if (!this.startTime) return;
-    const currentTimeMs = performance.now() - this.startTime;
+    if (!this.audio.startTime) return;
+    const currentTimeMs = this.audio.currentTimeMs();
     const msPerBeat = (60 / this.meta.bpm) * 1000;
     this.leadTime = msPerBeat * C.LEAD_BEAT;
     this.character.update(deltaTime);
@@ -166,7 +160,7 @@ export default class Gameplay {
   }
 
   destroy() {
-    this.audio.pause();
+    this.audio.audio.pause();
     window.removeEventListener("keydown", this.onKeyDown);
   }
 }

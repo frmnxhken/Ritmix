@@ -2,8 +2,7 @@ import * as C from "@/utils/Constants.js";
 import Particle from "@/components/Particle.js";
 
 export function HitDetect(gameplay, type) {
-  const currentTimeMs = gameplay.audio.currentTime * 1000;
-
+  const currentTimeMs = gameplay.audio.currentTimeMs();
   const targetNote = gameplay.notes
     .filter((n) => n.type === type && !n.isHit)
     .reduce(
