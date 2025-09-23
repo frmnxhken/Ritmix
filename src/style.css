@@ -23,6 +23,12 @@ canvas {
   height: 600px;
   transform: translate(-50%, -50%);
   border: 1px solid black;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
 }
 
 .menu,
@@ -40,21 +46,51 @@ canvas {
 
 .menu h1 {
   font-size: 48px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+}
+
+.menu .list-music {
+  width: 50%;
+  overflow-y: scroll;
+  height: 400px;
+  padding: 3rem 0 0 2rem;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 .menu .music {
   text-transform: lowercase;
   margin-bottom: 20px;
-  border: 1px dashed white;
+  border: 1px solid white;
   padding: 0.5rem;
-  width: 50%;
+  width: 100%;
+  color: black;
+  background-color: white;
   box-sizing: border-box;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.menu .music:nth-child(odd) {
+  transform: rotate(-1deg);
+}
+
+.menu .music:nth-child(even) {
+  transform: rotate(1deg);
 }
 
 .menu .music:hover {
-  background-color: white;
-  color: black;
+  transform: rotate(0deg);
+  background-color: black;
+  color: white;
 }
 
 .game-over h1 {

@@ -12,6 +12,7 @@ export default class Menu {
     root.innerHTML = `
       <div class="menu">
         <h1>Select Music</h1>
+          <div class="list-music">
         ${playlists.data
           .map(
             (playlist, id) =>
@@ -20,6 +21,7 @@ export default class Menu {
           </div>`
           )
           .join("")}
+          </div>
       </div>
     `;
 
