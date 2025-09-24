@@ -1,5 +1,6 @@
 import playlists from "@/playlist.json";
 import Gameplay from "@/scenes/Gameplay.js";
+import Store from "@/utils/Store";
 
 export default class Menu {
   constructor(game) {
@@ -25,10 +26,14 @@ export default class Menu {
       </div>
     `;
 
+    const store = new Store("ritmix");
     const menu = document.querySelector(".menu");
     this._menuHandler = (e) => {
       if (e.target.classList.contains("music")) {
-        let id = e.target.dataset.id;
+        const id = e.target.dataset.id;
+        const metaId = playlists.data[id].id;
+        const isExist = store.getBy("id", metaId).length;
+        if (!isExist) store.insert({ id: metaId, highscore: 0 });
         this.game.changeScene(new Gameplay(this.game, playlists.data[id]));
       }
     };

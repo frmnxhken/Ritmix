@@ -4,6 +4,8 @@ export default class GameOver {
   constructor(game, score) {
     this.game = game;
     this.score = score;
+    this.newScore = this.score.score;
+    this.highScore = this.score.maxScore();
     this._buttonBack = null;
   }
 
@@ -12,7 +14,8 @@ export default class GameOver {
     root.innerHTML = `
         <div class="game-over">
             <h1>Anjay Bro</h1>
-            <p>Your Score: ${this.score}</p>
+            <p>Your Score: ${this.newScore}</p>
+            <p>Your High Score: ${this.highScore}</p>
             <button>Back To Menu</button>
         </div>
     `;

@@ -63,7 +63,7 @@ export default class Gameplay {
     this.lastTime = 0;
     this.nextNoteIndex = 0;
 
-    this.score = new Score();
+    this.score = new Score(data.id);
     this.arrowBox = new ArrowBox();
     this.screenShake = new ScreenShake();
 
@@ -83,7 +83,7 @@ export default class Gameplay {
     this.notes.setMeta(this.meta);
     initInput(this);
     await this.audio.play(() =>
-      this.game.changeScene(new GameOver(this.game, this.score.score))
+      this.game.changeScene(new GameOver(this.game, this.score))
     );
     this.character.play("idle");
   }

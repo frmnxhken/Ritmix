@@ -1,11 +1,21 @@
 import * as C from "../utils/Constants";
+import Store from "@/utils/Store";
 
 export default class Score {
-  constructor() {
+  constructor(id) {
+    this.id = id;
     this.score = 0;
     this.combo = "";
     this.comboPopupTime = 0;
     this.popupDuration = 300;
+  }
+
+  maxScore() {
+    const store = new Store("ritmix");
+    const prevScore = store.getBy("id", this.id)[0].highscore;
+    const highscore = this.score > prevScore ? this.score : prevScore;
+    store.update("id", this.id, { highscore: highscore });
+    return highscore;
   }
 
   update(newScore, newCombo) {
