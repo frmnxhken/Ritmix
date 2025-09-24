@@ -19,8 +19,6 @@ canvas {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 800px;
-  height: 600px;
   transform: translate(-50%, -50%);
   border: 1px solid black;
   -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);

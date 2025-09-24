@@ -1,4 +1,4 @@
-import * as C from "../utils/Constants";
+import * as C from "@/utils/Constants";
 import Store from "@/utils/Store";
 
 export default class Score {
@@ -30,7 +30,7 @@ export default class Score {
     ctx.font = "18px FNFFont";
     const scoreText = this.score.toString();
     const scoreMetrics = ctx.measureText(scoreText);
-    const scoreX = (C.CANVAS_WIDTH - scoreMetrics.width) / 2;
+    const scoreX = (C.CANVAS_WIDTH - scoreMetrics.width) / 2 - 18;
     ctx.fillText(scoreText, scoreX, 490);
 
     let scale = 1;
@@ -46,7 +46,7 @@ export default class Score {
     ctx.font = "36px FNFFont";
     const comboText = this.combo.toString();
     const comboMetrics = ctx.measureText(comboText);
-    const centerX = C.CANVAS_WIDTH / 2;
+    const centerX = C.CANVAS_WIDTH / 2 - 18;
     const comboX = -comboMetrics.width / 2;
 
     ctx.translate(centerX, 520);

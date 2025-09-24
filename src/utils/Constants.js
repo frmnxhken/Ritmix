@@ -1,4 +1,4 @@
-export const CANVAS_WIDTH = 800;
+export const CANVAS_WIDTH = 1080;
 export const CANVAS_HEIGHT = 600;
 export const HIT_LINE_OFFSET = 100;
 export const HIT_LINE_Y = CANVAS_HEIGHT - HIT_LINE_OFFSET;

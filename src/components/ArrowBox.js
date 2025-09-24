@@ -6,19 +6,19 @@ export class ArrowBox {
   }
 
   static positions = [
-    { name: "left", image: ArrowBox.loadImage("/arrow_box/left.png"), x: 65 },
-    { name: "up", image: ArrowBox.loadImage("/arrow_box/up.png"), x: 195 },
-    { name: "down", image: ArrowBox.loadImage("/arrow_box/down.png"), x: 475 },
+    { name: "left", image: ArrowBox.loadImage("/arrow_box/left.png"), x: 150 },
+    { name: "up", image: ArrowBox.loadImage("/arrow_box/up.png"), x: 328 },
+    { name: "down", image: ArrowBox.loadImage("/arrow_box/down.png"), x: 782 },
     {
       name: "right",
       image: ArrowBox.loadImage("/arrow_box/right.png"),
-      x: 605,
+      x: 940,
     },
   ];
 
   draw(ctx) {
     ArrowBox.positions.forEach(({ image, x }) => {
-      ctx.drawImage(image, x, 460, 80, 80);
+      ctx.drawImage(image, x - 80 / 2, 460, 80, 80);
     });
   }
 }

@@ -15,22 +15,22 @@ export default class Note {
 
   static variants = {
     left: {
-      x: 105,
+      x: 150,
       color: "#FF17AC",
       image: Note.loadImage("/note/left.png"),
     },
     up: {
-      x: 235,
+      x: 328,
       color: "#14F80D",
       image: Note.loadImage("/note/up.png"),
     },
     down: {
-      x: 515,
+      x: 782,
       color: "#00FFFF",
       image: Note.loadImage("/note/down.png"),
     },
     right: {
-      x: 645,
+      x: 940,
       color: "#FF131E",
       image: Note.loadImage("/note/right.png"),
     },
