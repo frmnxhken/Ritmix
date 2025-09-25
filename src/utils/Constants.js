@@ -1,10 +1,10 @@
-export const CANVAS_WIDTH = 1080;
-export const CANVAS_HEIGHT = 600;
+export const CANVAS_WIDTH = 960;
+export const CANVAS_HEIGHT = 540;
 export const HIT_LINE_OFFSET = 100;
 export const HIT_LINE_Y = CANVAS_HEIGHT - HIT_LINE_OFFSET;
 export const NOTE_SIZE = 80;
 export const NOTE_SPAWN_LEAD_TIME = 1800;
-export const LEAD_BEAT = 3;
+export const LEAD_BEAT = 2;
 export const PERFECT_WINDOW_MS = 50;
 export const GOOD_WINDOW_MS = 100;
 export const MISS_WINDOW_MS = 200;

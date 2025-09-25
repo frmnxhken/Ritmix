@@ -31,7 +31,7 @@ export default class Score {
     const scoreText = this.score.toString();
     const scoreMetrics = ctx.measureText(scoreText);
     const scoreX = (C.CANVAS_WIDTH - scoreMetrics.width) / 2 - 18;
-    ctx.fillText(scoreText, scoreX, 490);
+    ctx.fillText(scoreText, scoreX, 450);
 
     let scale = 1;
     const now = performance.now();
@@ -49,7 +49,7 @@ export default class Score {
     const centerX = C.CANVAS_WIDTH / 2 - 18;
     const comboX = -comboMetrics.width / 2;
 
-    ctx.translate(centerX, 520);
+    ctx.translate(centerX, 480);
     ctx.scale(scale, scale);
     ctx.fillText(comboText, comboX, 0);
     ctx.restore();

@@ -20,17 +20,17 @@ export default class Note {
       image: Note.loadImage("/note/left.png"),
     },
     up: {
-      x: 328,
+      x: 280,
       color: "#14F80D",
       image: Note.loadImage("/note/up.png"),
     },
     down: {
-      x: 782,
+      x: 680,
       color: "#00FFFF",
       image: Note.loadImage("/note/down.png"),
     },
     right: {
-      x: 940,
+      x: 810,
       color: "#FF131E",
       image: Note.loadImage("/note/right.png"),
     },
