@@ -6,11 +6,25 @@ const keyMap = {
 };
 
 export function initInput(gameInstance) {
-  window.addEventListener("keydown", (e) => {
+  const onKeyDown = (e) => {
+    const key = keyMap[e.key];
+    if (key && !gameInstance.heldKeys[key]) {
+      gameInstance.heldKeys[key] = true;
+      gameInstance.handlePress(key);
+    }
+  };
+
+  const onKeyUp = (e) => {
     const key = keyMap[e.key];
     if (key) {
-      gameInstance.handleHit(key);
-      gameInstance.character.play(key);
+      gameInstance.heldKeys[key] = false;
+      gameInstance.handleRelease(key);
     }
-  });
+  };
+
+  window.addEventListener("keydown", onKeyDown);
+  window.addEventListener("keyup", onKeyUp);
+
+  gameInstance.onKeyDown = onKeyDown;
+  gameInstance.onKeyUp = onKeyUp;
 }

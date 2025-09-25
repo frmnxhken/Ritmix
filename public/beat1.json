@@ -7,11 +7,9 @@
   "notes": [
     { "time": 1572, "beat": 3.01, "type": "up" },
     { "time": 2148, "beat": 4.11, "type": "down" },
-    { "time": 2607, "beat": 4.99, "type": "up" },
+    { "time": 2607, "beat": 4.99, "endTime": 5600, "type": "up" },
     { "time": 3022, "beat": 5.79, "type": "down" },
-    { "time": 3570, "beat": 6.84, "type": "up" },
     { "time": 4150, "beat": 7.95, "type": "down" },
-    { "time": 4562, "beat": 8.74, "type": "up" },
     { "time": 5111, "beat": 9.79, "type": "down" },
     { "time": 5626, "beat": 10.78, "type": "up" },
     { "time": 6149, "beat": 11.78, "type": "up" },
