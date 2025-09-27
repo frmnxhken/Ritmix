@@ -93,10 +93,15 @@ export default class Note {
       const tailY = this.tailY;
 
       if (headY > -this.size) {
-        if (this.holdBroken) {
+        if (
+          this.holdBroken ||
+          (!this.isHit && headY > HIT_LINE_Y + this.size / 2)
+        ) {
           ctx.fillStyle = "#32495080";
         } else if (this.isHolding) {
           ctx.fillStyle = this.color;
+          ctx.shadowColor = this.color;
+          ctx.shadowBlur = 32;
         } else {
           ctx.fillStyle = `${this.color}80`;
         }
@@ -108,6 +113,12 @@ export default class Note {
           headY - tailY
         );
       }
+    }
+
+    ctx.restore();
+
+    if (this.isHit && this.isHolding) {
+      return true;
     }
 
     ctx.drawImage(
