@@ -10,6 +10,7 @@ export function initInput(gameInstance) {
     const key = keyMap[e.key];
     if (key && !gameInstance.heldKeys[key]) {
       gameInstance.heldKeys[key] = true;
+      gameInstance.character.animations[key].loop = true;
       gameInstance.handlePress(key);
     }
   };
@@ -18,6 +19,7 @@ export function initInput(gameInstance) {
     const key = keyMap[e.key];
     if (key) {
       gameInstance.heldKeys[key] = false;
+      gameInstance.character.animations[key].loop = false;
       gameInstance.handleRelease(key);
     }
   };
