@@ -42,8 +42,6 @@ export default class Sprite {
       this.currentFrame++;
 
       if (this.currentFrame > this.currentAnim.endFrame) {
-        console.log(this.currentAnim.loop);
-
         if (this.currentAnim.loop) {
           this.currentFrame = this.currentAnim.startFrame;
         } else {

@@ -60,6 +60,7 @@ export default class Gameplay {
 
     this.notes = new NoteManager();
     this.particles = new ParticleManager();
+    this.heldKeys = {};
     this.lastTime = 0;
     this.nextNoteIndex = 0;
 
@@ -107,8 +108,13 @@ export default class Gameplay {
       .sort((a, b) => a.time - b.time);
   }
 
-  handleHit(type) {
-    HitDetect(this, type);
+  handlePress(type) {
+    HitDetect.onPress(this, type);
+    this.character.play(type);
+  }
+
+  handleRelease(type) {
+    HitDetect.onRelease(this, type);
   }
 
   update(deltaTime) {
