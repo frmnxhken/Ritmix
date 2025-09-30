@@ -1,5 +1,5 @@
 import playlists from "@/playlist.json";
-import Gameplay from "@/scenes/Gameplay.js";
+import CharacterSelect from "@/scenes/CharacterSelect.js";
 import Store from "@/utils/Store";
 
 export default class Menu {
@@ -34,7 +34,9 @@ export default class Menu {
         const metaId = playlists.data[id].id;
         const isExist = store.getBy("id", metaId).length;
         if (!isExist) store.insert({ id: metaId, highscore: 0 });
-        this.game.changeScene(new Gameplay(this.game, playlists.data[id]));
+        this.game.changeScene(
+          new CharacterSelect(this.game, playlists.data[id])
+        );
       }
     };
 
